@@ -34,3 +34,20 @@ services:
       - basketdb
     ports:
       - "8001:80"
+
+  order.api:
+    container_name: order.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      #ConnectionSettings here
+    ports:
+      - "8002:80"
+  
+  rabbitmq:
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+     
+

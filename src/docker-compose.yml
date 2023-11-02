@@ -17,5 +17,15 @@ services:
       context: .
       dockerfile: /Basket.API/Dockerfile
 
+  order.api:
+    image: ${DOCKER_REGISTRY-}orderapi
+    build:
+      context: .
+      dockerfile: Order.API/Dockerfile
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+
 volumes:
   mongo_data:
+
