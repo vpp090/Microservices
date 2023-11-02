@@ -1,4 +1,5 @@
 using Basket.API.Repositories;
+using MassTransit;
 using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,24 @@ builder.Services.AddStackExchangeRedisCache(opt =>
 ) ;
 
 builder.Services.AddScoped<IBasketRepository, ShoppingBasketRepository>();
+builder.Services.AddAutoMapper(typeof(Program));
+
+var conf = builder.Configuration["EventBusSettings:HostAddress"];
+
+builder.Services.AddMassTransit(config =>
+{
+    config.UsingRabbitMq((ctx, cfg) =>
+    {
+        cfg.Host("localhost",5672, "/", h =>
+        {
+            h.Username("guest");
+            h.Password("guest");
+            
+        });
+        
+    });
+});
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -29,8 +48,3 @@ if (app.Environment.IsDevelopment())
 app.MapControllers();
 
 app.Run();
-
-internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

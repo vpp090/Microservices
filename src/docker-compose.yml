@@ -5,6 +5,8 @@ services:
     image: mongo
   basketdb:
     image: redis:alpine
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
 
   catalog.api:
     image: ${DOCKER_REGISTRY-}catalogapi
@@ -23,8 +25,7 @@ services:
       context: .
       dockerfile: Order.API/Dockerfile
 
-  rabbitmq:
-    image: rabbitmq:3-management-alpine
+  
 
 volumes:
   mongo_data:

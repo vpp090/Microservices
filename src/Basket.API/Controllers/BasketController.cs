@@ -1,5 +1,8 @@
-﻿using Basket.API.Entities;
+﻿using AutoMapper;
+using Basket.API.Entities;
 using Basket.API.Repositories;
+using EventBus.Messages.Events;
+using MassTransit;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,9 +13,13 @@ namespace Basket.API.Controllers
     public class BasketController : ControllerBase
     {
         private readonly IBasketRepository _repository;
-        public BasketController(IBasketRepository repository)
+        private readonly IMapper _mapper;
+        private readonly IPublishEndpoint _publishEndpoint;
+        public BasketController(IBasketRepository repository, IMapper mapper, IPublishEndpoint endpoint)
         {
             _repository = repository;
+            _mapper = mapper;
+            _publishEndpoint = endpoint;
         }
 
         [HttpGet]
@@ -38,9 +45,14 @@ namespace Basket.API.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<ShoppingBasket>> UpdateBasket(string username)
+        public async Task<ActionResult<ShoppingBasket>> UpdateBasket([FromBody] ShoppingBasket basket)
         {
-            throw new NotImplementedException();
+            var result = await _repository.UpdateBasket(basket);
+
+            if (result == null)
+                return BadRequest();
+
+            return Ok(result);
         }
 
         [HttpDelete]
@@ -49,6 +61,23 @@ namespace Basket.API.Controllers
             var result = await _repository.DeleteBasket(userName);
 
             return Ok(result);
+        }
+
+        [Route("[action]")]
+        [HttpPost]
+        public async Task<IActionResult> Checkout([FromBody] CheckoutEvent checkoutEvent)
+        {
+            var basket = await _repository.GetBasket(checkoutEvent.Checkout.UserName);
+            if (basket == null) return BadRequest();
+
+            var eventMessage = _mapper.Map<BasketCheckoutEvent>(checkoutEvent);
+            eventMessage.Order.TotalPrice = basket.TotalPrice;
+
+            await _publishEndpoint.Publish(eventMessage);
+
+            await _repository.DeleteBasket(basket.Username);
+
+            return Ok(basket);
         }
     }
 }

@@ -14,7 +14,14 @@ services:
     restart: always
     ports:
       - "6379:6379"
-    
+  
+  rabbitmq:
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
   catalog.api:
     container_name: catalog.api
     environment:
@@ -43,11 +50,6 @@ services:
     ports:
       - "8002:80"
   
-  rabbitmq:
-    container_name: rabbitmq
-    restart: always
-    ports:
-      - "5672:5672"
-      - "15672:15672"
+  
      
 

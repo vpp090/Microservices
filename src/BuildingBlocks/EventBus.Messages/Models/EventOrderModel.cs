@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EventBus.Messages.Models
 {
-    public class OrderModel
+    public class EventOrderModel
     {
         public Guid OrderId { get; set; }
         public string UserName { get; set; }
@@ -20,5 +20,6 @@ namespace EventBus.Messages.Models
         public int PaymentMethod { get; set; }
 
         public string Email { get; set; }
+        public decimal TotalPrice { get; set; }
     }
 }

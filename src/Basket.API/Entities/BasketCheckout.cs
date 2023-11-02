@@ -1,13 +1,10 @@
-﻿using Order.Domain.Entities.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Order.Domain.Entities
+﻿namespace Basket.API.Entities
 {
-    public class Order : EntityBase
+    public class CheckoutEvent
+    {
+        public BasketCheckout Checkout { get; set; }
+    }
+    public class BasketCheckout
     {
         public Guid OrderId { get; set; }
         public string UserName { get; set; }
@@ -21,6 +18,6 @@ namespace Order.Domain.Entities
         public int PaymentMethod { get; set; }
 
         public string Email { get; set; }
-        public decimal TotalPrice { get; set; }
+        
     }
 }
