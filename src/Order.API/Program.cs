@@ -1,3 +1,7 @@
+using EventBus.Messages.Common;
+using MassTransit;
+using Order.API.Consumers;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +10,27 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddMassTransit(config =>
+{
+    config.AddConsumer<BasketCheckoutConsumer>();
+
+    config.UsingRabbitMq((ctx, cfg) =>
+    {
+        cfg.Host(builder.Configuration["EventBusSettings:Location"], builder.Configuration["EventBusSettings:Port"], "/", h =>
+        {
+            h.Username(builder.Configuration["EventBusSettings:UserName"]);
+            h.Password(builder.Configuration["EventBusSettings:Password"]);
+
+        });
+
+        cfg.ReceiveEndpoint(EventBusConstants.BasketCheckoutQueue, c =>
+        {
+            c.ConfigureConsumer<BasketCheckoutConsumer>(ctx);
+        });
+
+    });
+});
 
 var app = builder.Build();
 

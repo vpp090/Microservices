@@ -14,8 +14,6 @@ builder.Services.AddStackExchangeRedisCache(opt =>
 builder.Services.AddScoped<IBasketRepository, ShoppingBasketRepository>();
 builder.Services.AddAutoMapper(typeof(Program));
 
-var conf = builder.Configuration["EventBusSettings:HostAddress"];
-
 builder.Services.AddMassTransit(config =>
 {
     config.UsingRabbitMq((ctx, cfg) =>
@@ -26,7 +24,6 @@ builder.Services.AddMassTransit(config =>
             h.Password("guest");
             
         });
-        
     });
 });
 
