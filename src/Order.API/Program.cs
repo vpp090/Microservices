@@ -1,11 +1,16 @@
 using EventBus.Messages.Common;
 using MassTransit;
 using Order.API.Consumers;
+using Order.Application.Extensions;
+using Order.Application.Contracts.Persistence;
+using Order.Application.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+builder.Services.AddApplicationServices();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

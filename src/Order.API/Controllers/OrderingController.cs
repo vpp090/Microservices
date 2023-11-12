@@ -1,5 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Order.Application.Features.Commands.CheckoutOrder;
+using Order.Application.Features.Commands.DeleteOrder;
+using Order.Application.Features.Commands.UpdateOrder;
+using Order.Application.Features.Queries.GetOrderList;
+using System.Net;
 
 namespace Order.API.Controllers
 {
@@ -7,23 +12,51 @@ namespace Order.API.Controllers
     [ApiController]
     public class OrderingController : ControllerBase
     {
+        private readonly IMediator _mediator;
 
-        public OrderingController()
+        public OrderingController(IMediator mediator)
         {
-            
+            _mediator = mediator;
         }
 
-        [HttpGet]
-        public async Task<ActionResult> GetOrder()
+        [HttpGet("{userName}", Name = "GetOrder")]
+        public async Task<ActionResult<IEnumerable<OrdersVm>>> GetOrdersByUserName(string userName)
         {
-            throw new NotFiniteNumberException();
+            var query = new GetOrderListQuery(userName);
+
+            var orders = await _mediator.Send(query);
+
+            return Ok(orders); 
         }
 
-        [HttpPost]
-        public async Task<ActionResult> CreateOrder()
+        //method for testing purpose
+        [HttpPost(Name = "CheckoutOrder")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+      
+        public async Task<ActionResult<int>> CheckoutOrder([FromBody] CheckoutOrderCommand command)
         {
-            throw new NotImplementedException();
+            var result = await _mediator.Send(command);
+
+            return Ok(result);
         }
 
+        [HttpPut(Name = "UpdateOrder")]
+        [ProducesResponseType((int)HttpStatusCode.NoContent)]
+        public async Task<ActionResult> UpdateOrder([FromBody] UpdateOrderCommand command)
+        {
+            await _mediator.Send(command);
+            return NoContent();
+        }
+
+        [HttpDelete("{id}", Name = "DeleteOrder")]
+        [ProducesResponseType((int)HttpStatusCode.NoContent)]
+        public async Task<ActionResult> DeleteOrder(int id)
+        {
+            var command = new DeleteOrderCommand() { Id = id };
+
+            await _mediator.Send(command);
+
+            return NoContent();
+        }
     }
 }

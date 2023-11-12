@@ -1,12 +1,8 @@
-﻿namespace Basket.API.Entities
+﻿namespace Order.Application.Features.Queries.GetOrderList
 {
-    public class CheckoutEvent
+    public class OrdersVm
     {
-        public BasketCheckout Checkout { get; set; }
-    }
-    public class BasketCheckout
-    {
-        public int Id { get; set; }
+        public Guid OrderId { get; set; }
         public string UserName { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -18,6 +14,6 @@
         public int PaymentMethod { get; set; }
 
         public string Email { get; set; }
-        
+        public decimal TotalPrice { get; set; }
     }
 }
