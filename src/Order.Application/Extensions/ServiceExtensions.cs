@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Order.Application.Behaviors;
 using Order.Application.Contracts.Persistence;
 using Order.Application.Features.Commands.CheckoutOrder;
-using Order.Application.Repositories;
 using System.Reflection;
 
 namespace Order.Application.Extensions
@@ -23,11 +22,6 @@ namespace Order.Application.Extensions
             return services;
         }
 
-        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
-        {
-            services.AddScoped<IOrderRepository, OrderRepository>();
-
-            return services;
-        }
+        
     }
 }
