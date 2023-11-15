@@ -1,8 +1,11 @@
 using EventBus.Messages.Common;
 using MassTransit;
+using Microsoft.EntityFrameworkCore;
 using Order.API.Consumers;
 using Order.Application.Extensions;
 using Order.Infrastructure.Extensions;
+using Order.Infrastructure.Persistence;
+using Order.API.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +40,8 @@ builder.Services.AddMassTransit(config =>
     });
 });
 
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -45,6 +50,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.MigrateDatabase<OrderContext>((ctx, services) =>
+{
+    var logger = services.GetService<ILogger<OrderContextSeed>>();
+    OrderContextSeed.SeedAsync(ctx, logger).Wait();
+
+});
 
 app.MapControllers();
 
