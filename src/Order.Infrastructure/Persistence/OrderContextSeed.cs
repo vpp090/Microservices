@@ -9,11 +9,12 @@ namespace Order.Infrastructure.Persistence
 {
     public class OrderContextSeed
     {
-        public static async Task SeedAsync(OrderContext context, ILogger<OrderContextSeed> logger)
+        public static async Task SeedAsync(OrderContext context, 
+                                            ILogger<OrderContextSeed> logger)
         {
             if (!context.Orders.Any())
             {
-                context.Orders.AddRange();
+                context.Orders.AddRange(GetSeedOrders());
                 await context.SaveChangesAsync();
             }
         }

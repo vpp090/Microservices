@@ -1,6 +1,5 @@
 using EventBus.Messages.Common;
 using MassTransit;
-using Microsoft.EntityFrameworkCore;
 using Order.API.Consumers;
 using Order.Application.Extensions;
 using Order.Infrastructure.Extensions;
@@ -54,7 +53,9 @@ if (app.Environment.IsDevelopment())
 app.MigrateDatabase<OrderContext>((ctx, services) =>
 {
     var logger = services.GetService<ILogger<OrderContextSeed>>();
-    OrderContextSeed.SeedAsync(ctx, logger).Wait();
+    OrderContextSeed
+            .SeedAsync(ctx, logger)
+            .Wait();
 
 });
 
