@@ -19,7 +19,7 @@ namespace Order.Application.Features.Queries.GetOrderList
         {
             var orderList = await _repository.GetOrderByUserName(request.UserName);
 
-            var mappedOrders = _mapper.Map<List<OrdersVm>>(orderList);
+            var mappedOrders = orderList.Select(_mapper.Map<Domain.Entities.Order, OrdersVm>).ToList();
 
             return mappedOrders;
         }
