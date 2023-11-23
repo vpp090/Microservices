@@ -1,7 +1,6 @@
-﻿using EventBus.Messages.Models;
-using System.Reflection.Metadata;
+﻿using BrokerMessagesR.Models;
 
-namespace EventBus.Messages.Events
+namespace BrokerMessagesR.Events
 {
     public class BasketCheckoutEvent : IntegrationBaseEvent
     {

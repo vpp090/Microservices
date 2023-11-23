@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <ApplicationIcon>oo.ico</ApplicationIcon>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>BrokerMessagesR</Title>
+    <PackageIcon>tools.png</PackageIcon>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <PackageTags>rabbitmq eventbus ecommerce</PackageTags>
+    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+    <Authors>vpp090</Authors>
+    <Company>vpp090</Company>
+    <Product>BrokerMessagesR</Product>
+    <Description>Classes for e-commerce order messages for a message broker.</Description>
+    <PackageId>BrokerMessagesR</PackageId>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <PackageLicenseFile>mit.txt</PackageLicenseFile>
+    <Version>1.0.2</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="oo.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="mit.txt">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="readme.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="tools.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>

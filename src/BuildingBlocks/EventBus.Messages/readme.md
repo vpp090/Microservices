@@ -1,0 +1,1 @@
+BasketCheckoutEvent for publish orders to rabbitmq for consumption of other services

@@ -1,4 +1,4 @@
-using EventBus.Messages.Common;
+using BrokerMessagesR.Common;
 using MassTransit;
 using Order.API.Consumers;
 using Order.Application.Extensions;

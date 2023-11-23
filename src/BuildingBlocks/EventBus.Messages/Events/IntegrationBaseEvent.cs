@@ -1,4 +1,4 @@
-﻿namespace EventBus.Messages.Events
+﻿namespace BrokerMessagesR.Events
 {
     public class IntegrationBaseEvent
     {

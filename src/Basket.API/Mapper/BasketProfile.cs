@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Basket.API.Entities;
-using EventBus.Messages.Events;
+using BrokerMessagesR.Events;
 
 namespace Basket.API.Mapper
 {

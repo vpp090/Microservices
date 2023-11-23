@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Basket.API.Entities;
 using Basket.API.Repositories;
-using EventBus.Messages.Events;
+using BrokerMessagesR.Events;
 using MassTransit;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

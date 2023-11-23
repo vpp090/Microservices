@@ -1,4 +1,4 @@
-﻿namespace EventBus.Messages.Common
+﻿namespace BrokerMessagesR.Common
 {
     public static class EventBusConstants
     {
