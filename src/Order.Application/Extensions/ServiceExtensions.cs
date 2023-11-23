@@ -2,8 +2,6 @@
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Order.Application.Behaviors;
-using Order.Application.Contracts.Persistence;
-using Order.Application.Features.Commands.CheckoutOrder;
 using System.Reflection;
 
 namespace Order.Application.Extensions
