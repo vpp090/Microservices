@@ -1,3 +1,4 @@
+using Basket.API.Mapper;
 using Basket.API.Repositories;
 using MassTransit;
 using Microsoft.Extensions.Hosting;
@@ -12,18 +13,15 @@ builder.Services.AddStackExchangeRedisCache(opt =>
 ) ;
 
 builder.Services.AddScoped<IBasketRepository, ShoppingBasketRepository>();
+builder.Services.AddScoped<ISpecialMapperR, SpecialMapper>();
+
 builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddMassTransit(config =>
 {
     config.UsingRabbitMq((ctx, cfg) =>
     {
-        cfg.Host("localhost",5672, "/", h =>
-        {
-            h.Username("guest");
-            h.Password("guest");
-            
-        });
+        cfg.Host(builder.Configuration["EventBusSettings:HostAddress"]);
     });
 });
 

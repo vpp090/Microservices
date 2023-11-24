@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Basket.API.Entities;
+using Basket.API.Mapper;
 using Basket.API.Repositories;
 using BrokerMessagesR.Events;
 using MassTransit;
@@ -15,6 +16,7 @@ namespace Basket.API.Controllers
         private readonly IBasketRepository _repository;
         private readonly IMapper _mapper;
         private readonly IPublishEndpoint _publishEndpoint;
+      
         public BasketController(IBasketRepository repository, IMapper mapper, IPublishEndpoint endpoint)
         {
             _repository = repository;
@@ -65,12 +67,14 @@ namespace Basket.API.Controllers
 
         [Route("[action]")]
         [HttpPost]
-        public async Task<IActionResult> Checkout([FromBody] CheckoutEvent checkoutEvent)
+        public async Task<IActionResult> Checkout([FromBody] CheckoutEvent checkoutEvent, [FromServices]ISpecialMapperR specMap)
         {
             var basket = await _repository.GetBasket(checkoutEvent.Checkout.UserName);
-            if (basket == null) return BadRequest();
+            if (basket == null) return NotFound("Basket_Not_Found");
 
-            var eventMessage = _mapper.Map<BasketCheckoutEvent>(checkoutEvent);
+            var eventMessage = new BasketCheckoutEvent();
+
+            eventMessage.Order = specMap.MapProperties(checkoutEvent.Checkout, eventMessage.Order);
             eventMessage.Order.TotalPrice = basket.TotalPrice;
 
             await _publishEndpoint.Publish(eventMessage);

@@ -5,6 +5,7 @@ using Order.Application.Extensions;
 using Order.Infrastructure.Extensions;
 using Order.Infrastructure.Persistence;
 using Order.API.Extensions;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastureServices(builder.Configuration);
+builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddScoped<BasketCheckoutConsumer>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -22,24 +25,19 @@ builder.Services.AddMassTransit(config =>
 {
     config.AddConsumer<BasketCheckoutConsumer>();
 
-    config.UsingRabbitMq((ctx, cfg) =>
+    builder.Services.AddMassTransit(config =>
     {
-        cfg.Host(builder.Configuration["EventBusSettings:Location"], builder.Configuration["EventBusSettings:Port"], "/", h =>
+        config.UsingRabbitMq((ctx, cfg) =>
         {
-            h.Username(builder.Configuration["EventBusSettings:UserName"]);
-            h.Password(builder.Configuration["EventBusSettings:Password"]);
+            cfg.Host(builder.Configuration["EventBusSettings:HostAddress"]);
 
+            cfg.ReceiveEndpoint(EventBusConstants.BasketCheckoutQueue, c =>
+            {
+                c.ConfigureConsumer<BasketCheckoutConsumer>(ctx);
+            });
         });
-
-        cfg.ReceiveEndpoint(EventBusConstants.BasketCheckoutQueue, c =>
-        {
-            c.ConfigureConsumer<BasketCheckoutConsumer>(ctx);
-        });
-
     });
 });
-
-
 
 var app = builder.Build();
 
