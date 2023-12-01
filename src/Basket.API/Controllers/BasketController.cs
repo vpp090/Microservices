@@ -6,6 +6,7 @@ using BrokerMessagesR.Events;
 using MassTransit;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace Basket.API.Controllers
 {
@@ -24,7 +25,8 @@ namespace Basket.API.Controllers
             _publishEndpoint = endpoint;
         }
 
-        [HttpGet]
+        [HttpGet("{userName}")]
+        [ProducesResponseType(typeof(ShoppingBasket), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<ShoppingBasket>> GetBasket(string username)
         {
             var basket = await _repository.GetBasket(username);
@@ -36,6 +38,7 @@ namespace Basket.API.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(ShoppingBasket), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<ShoppingBasket>> CreateBasket(string username, ShoppingBasket basket)
         {
             var result = await _repository.CreateBasket(username, basket);
@@ -58,6 +61,7 @@ namespace Basket.API.Controllers
         }
 
         [HttpDelete]
+        [ProducesResponseType(typeof(void), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<bool>> DeleteBasket(string userName)
         {
             var result = await _repository.DeleteBasket(userName);
@@ -67,6 +71,8 @@ namespace Basket.API.Controllers
 
         [Route("[action]")]
         [HttpPost]
+        [ProducesResponseType((int)HttpStatusCode.Accepted)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Checkout([FromBody] CheckoutEvent checkoutEvent, [FromServices]ISpecialMapperR specMap)
         {
             var basket = await _repository.GetBasket(checkoutEvent.Checkout.UserName);

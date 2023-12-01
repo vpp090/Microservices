@@ -5,7 +5,7 @@ namespace SpecMapperR
 {
     public class SpecialMapper
     {
-        public TDest MapProperties<TSource, TDest>(TSource source, TDest dest) where TDest : new()
+        public static TDest MapProperties<TSource, TDest>(TSource source, TDest dest) where TDest : new()
         {
             try
             {
