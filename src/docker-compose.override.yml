@@ -62,6 +62,13 @@ services:
     ports:
       - "8002:80"
   
-  
-     
+  ocelotapigateway:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+        - catalog.api
+        - basket.api
+        - order.api
+    ports:
+      - "8010:80"
 
