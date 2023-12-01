@@ -1,3 +1,4 @@
+using Ocelot.Cache.CacheManager;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 
@@ -9,18 +10,15 @@ builder.Logging.AddDebug();
 
 builder.Configuration.AddJsonFile($"ocelot.{builder.Environment.EnvironmentName}.json", true, true);
 
-builder.Services.AddOcelot();
+builder.Services.AddOcelot().AddCacheManager(sett => sett.WithDictionaryHandle());
 
 var app = builder.Build();
 
 app.UseRouting();
 
-app.UseEndpoints(endpoints =>
+app.MapGet("/", async context =>
 {
-    endpoints.MapGet("/", async context =>
-    {
-        await context.Response.WriteAsync("Hello World!");
-    });
+    await context.Response.WriteAsync("Hello World");
 });
 
 await app.UseOcelot();

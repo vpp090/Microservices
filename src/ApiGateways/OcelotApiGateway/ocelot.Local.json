@@ -11,7 +11,15 @@
         }
       ],
       "UpstreamPathTemplate": "/Catalog",
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
+      "RateLimitOptions": {
+        "ClientWhiteList": [],
+        "EnableRateLimiting": true,
+        "Period": "5s",
+        "PeriodTimespan": 1,
+        "Limit": 1
+      },
+      "FileCacheOptions": {"TtlSeconds": 30 } 
     },
     {
       "DownstreamPathTemplate": "/api/Catalog/{id}",
@@ -24,6 +32,7 @@
       ],
       "UpstreamPathTemplate": "/Catalog/{id}",
       "UpstreamHttpMethod": [ "GET", "DELETE" ]
+     
     },
     {
       "DownstreamPathTemplate": "/api/Catalog/GetProductByCategory/{category}",
@@ -72,7 +81,14 @@
         }
       ],
       "UpstreamPathTemplate": "/Basket/Checkout",
-      "UpstreamHttpMethod": [ "POST" ]
+      "UpstreamHttpMethod": [ "POST" ],
+      "RateLimitOptions": {
+          "ClientWhiteList": [],
+          "EnableRateLimiting": true,
+          "Period": "2s",
+          "PeriodTimespan": 1,
+          "Limit": 1
+      }
     },
     {
       "DownstreamPathTemplate": "/Discount/{productName]",
