@@ -8,13 +8,17 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddHttpClient<ICatalogService,  CatalogService>(c => 
-  c.BaseAddress = new Uri(builder.Configuration["ApplicationSettings:CatalogUrl"]));
+  c.BaseAddress = new Uri(builder.Configuration["ApiSettings:CatalogUrl"]));
 
 builder.Services.AddHttpClient<IBasketService, BasketService>(c =>
-    c.BaseAddress = new Uri(builder.Configuration["ApplicationSettings:BasketUrl"]));
+    c.BaseAddress = new Uri(builder.Configuration["ApiSettings:BasketUrl"]));
 
 builder.Services.AddHttpClient<IOrderService, OrderService>(c =>
-    c.BaseAddress = new Uri(builder.Configuration["ApplicationSettings:OrderUrl"]));
+    c.BaseAddress = new Uri(builder.Configuration["ApiSettings:OrderUrl"]));
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
@@ -25,5 +29,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.MapControllers();
 
 app.Run();
