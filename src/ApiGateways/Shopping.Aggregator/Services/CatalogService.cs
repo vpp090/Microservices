@@ -30,7 +30,7 @@ namespace Shopping.Aggregator.Services
 
         public async Task<IEnumerable<CatalogModel>> GetCatalogByCategory(string category)
         {
-            var response = await _client.GetAsync($"/api/Catalog/{category}");
+            var response = await _client.GetAsync($"/api/Catalog/GetProductByCategory{category}");
             var result = await response.ReadContentAs<List<CatalogModel>>();
 
             return result;
