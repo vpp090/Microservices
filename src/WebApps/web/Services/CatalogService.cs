@@ -1,13 +1,20 @@
 ﻿using AspnetRunBasics.Contracts;
 using AspnetRunBasics.Models;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace AspnetRunBasics.Services
 {
     public class CatalogService : ICatalogService
     {
-        public Task<CatalogModel> CreateCatalog(CatalogModel model)
+        private readonly HttpClient _client;  
+
+        public CatalogService(HttpClient client)
+        {
+            _client = client;
+        }
+        public async Task<CatalogModel> CreateCatalog(CatalogModel model)
         {
             throw new System.NotImplementedException();
         }
