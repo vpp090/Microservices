@@ -13,5 +13,13 @@
         public int PaymentMethod { get; set; }
 
         public string Email { get; set; }
+
+        public decimal TotalPrice { get; set; }
+
+        public string Expiration { get; set; }
+
+        public string ZipCode { get; set; }
+
+        public string State { get; set; }
     }
 }

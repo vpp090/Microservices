@@ -31,8 +31,7 @@
                 {
                     <li class="list-group-item d-flex justify-content-between lh-condensed">
                         <div>
-                            <h6 class="my-0">@item.Product.Name</h6>
-                            <small class="text-muted">@item.Product.Summary</small>
+                            <h6 class="my-0">@item.ProductName</h6>
                         </div>
                         <span class="text-muted">$@item.Price</span>
                     </li>
@@ -87,24 +86,19 @@
                 </div>
 
                 <div class="mb-3">
-                    <label asp-for="Order.EmailAddress" for="email">Email <span class="text-muted">(Optional)</span></label>
-                    <input asp-for="Order.EmailAddress" type="email" class="form-control" id="email" placeholder="you@example.com">
+                    <label asp-for="Order.Email" for="email">Email <span class="text-muted">(Optional)</span></label>
+                    <input asp-for="Order.Email" type="email" class="form-control" id="email" placeholder="you@example.com">
                     <div class="invalid-feedback">
                         Please enter a valid email address for shipping updates.
                     </div>
                 </div>
 
                 <div class="mb-3">
-                    <label asp-for="Order.AddressLine" for="address">Address</label>
-                    <input asp-for="Order.AddressLine" type="text" class="form-control" id="address" placeholder="1234 Main St" required>
+                    <label asp-for="Order.Address" for="address">Address</label>
+                    <input asp-for="Order.Address" type="text" class="form-control" id="address" placeholder="1234 Main St" required>
                     <div class="invalid-feedback">
                         Please enter your shipping address.
                     </div>
-                </div>
-
-                <div class="mb-3">
-                    <label for="address2">Address 2 <span class="text-muted">(Optional)</span></label>
-                    <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
                 </div>
 
                 <div class="row">
