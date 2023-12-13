@@ -1,12 +1,12 @@
 {
   "profiles": {
-    "AspnetRunBasics": {
+    "SpecMapperR": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:6001"
+      "applicationUrl": "https://localhost:50324;http://localhost:50326"
     }
   }
 }

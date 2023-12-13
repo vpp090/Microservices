@@ -1,12 +1,12 @@
 {
   "profiles": {
-    "AspnetRunBasics": {
+    "BrokerMessagesR": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:6001"
+      "applicationUrl": "https://localhost:50323;http://localhost:50325"
     }
   }
 }
