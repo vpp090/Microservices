@@ -50,6 +50,7 @@ namespace Basket.API.Controllers
         }
 
         [HttpPut]
+        [ProducesResponseType(typeof(ShoppingBasket), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<ShoppingBasket>> UpdateBasket([FromBody] ShoppingBasket basket)
         {
             var result = await _repository.UpdateBasket(basket);
@@ -60,7 +61,7 @@ namespace Basket.API.Controllers
             return Ok(result);
         }
 
-        [HttpDelete]
+        [HttpDelete("{userName}")]
         [ProducesResponseType(typeof(void), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<bool>> DeleteBasket(string userName)
         {

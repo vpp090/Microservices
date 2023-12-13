@@ -16,6 +16,19 @@ namespace EcomWebApp.Services
         public async Task<BasketModel> GetBasket(string userName)
         {
             var response = await _client.GetAsync($"/Basket/{userName}");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var cartModel = new BasketModel
+                {
+                    Username = userName,
+
+                };
+
+                var res = await _client.PostAsJsonAsync($"/Baske?userName={userName}", cartModel);
+                response = await _client.GetAsync($"/Basket/{userName}");
+            }
+
             var result = await response.ReadContentAs<BasketModel>();
 
             return result;
@@ -23,7 +36,7 @@ namespace EcomWebApp.Services
 
         public async Task<BasketModel> UpdateBasket(BasketModel model)
         {
-            var response = await _client.PostAsJson($"/Basket", model);
+            var response = await _client.PutAsJson($"/Basket", model);
             if (response.IsSuccessStatusCode)
                 return await response.ReadContentAs<BasketModel>();
             else

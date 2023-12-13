@@ -63,6 +63,7 @@ services:
       - "8002:80"
   
   ocelotapigateway:
+    container_name: ocelotapi.gateway
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     depends_on:
