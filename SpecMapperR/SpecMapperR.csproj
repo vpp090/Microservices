@@ -4,6 +4,35 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
+    <Title>SpecMappeR</Title>
+    <PackageId>SpecMappeR</PackageId>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Version>1.0.0</Version>
+    <Authors>vpp090</Authors>
+    <Company>vpp090</Company>
+    <Product>SpecMappeR</Product>
+    <Description>Mapping the properties of two objects.</Description>
+    <PackageIcon>mapi.png</PackageIcon>
+    <PackageTags>mapper;c#;c# mapper;c# objects;objects</PackageTags>
+    <PackageReleaseNotes>First release of this mapper</PackageReleaseNotes>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <PackageLicenseFile>license.txt</PackageLicenseFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\Users\vpetro\Desktop\license.txt">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\..\Users\vpetro\Desktop\mapi.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\..\Users\vpetro\Desktop\readme.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>
