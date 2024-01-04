@@ -1,11 +1,10 @@
-﻿
-using System.Reflection;
+﻿using System.Reflection;
 
 namespace SpecMapperR
 {
-    public class SpecialMapper
+    public class SpecialMapper : ISpecialMapper
     {
-        public static TDest MapProperties<TSource, TDest>(TSource source, TDest dest) where TDest : new()
+        public TDest MapProperties<TSource, TDest>(TSource source, TDest dest) where TDest : new()
         {
             try
             {
