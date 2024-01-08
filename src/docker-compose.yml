@@ -6,6 +6,12 @@ services:
 
   basketdb:
     image: redis:alpine
+  
+  discountdb:
+    image: postgres
+  
+  pgadmin:
+     image: dpage/pgadmin4
 
   orderdb:
     image: mcr.microsoft.com/mssql/server:2019-latest
@@ -45,6 +51,8 @@ services:
 
 volumes:
   mongo_data:
+  postgres_data:
+  pgadmin_data:
 
 
 

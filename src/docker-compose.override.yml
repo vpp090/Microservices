@@ -8,7 +8,31 @@ services:
       - "27017:27017"
     volumes: 
       - mongo_data:/data/db
+  
+  discountdb:
+    container_name: discountdb
+    environment:
+        - POSTGRES_USER=admin
+        - POSTGRES_PASSWORD=adminsof334
+        - POSTGRES_DB=DiscountDb
+    restart: always
+    ports: 
+        - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+  
+  pgadmin:
+     container_name: pgadmin
+     environment: 
+           - PGADMIN_DEFAULT_EMAIL=vpp090@outlook.com
+           - PGADMIN_DEFAULT_PASSWORD=adminsof2233
+     restart: always
+     ports:
+          - "5050:80"
+     volumes:
+          - pgadmin_data:/root/.pgadmin
 
+  
   basketdb:
     container_name: basketdb
     restart: always
