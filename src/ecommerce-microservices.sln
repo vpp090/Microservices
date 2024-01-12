@@ -43,9 +43,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcomWebApp", "WebApps\EcomW
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Discount", "Discount", "{52B860BA-8F6C-4D90-B6BE-15E563C21844}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Discount.API", "Discount.API\Discount.API.csproj", "{D610C5BF-7279-4E25-8716-1E34F6CAA879}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Discount.API", "Discount.API\Discount.API.csproj", "{D610C5BF-7279-4E25-8716-1E34F6CAA879}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIscount.Grpc", "DIscount.Grpc\DIscount.Grpc.csproj", "{A2073980-808C-4072-AAAD-211713017A0C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DIscount.Grpc", "DIscount.Grpc\DIscount.Grpc.csproj", "{A2073980-808C-4072-AAAD-211713017A0C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
