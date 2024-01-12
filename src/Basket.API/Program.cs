@@ -1,7 +1,9 @@
+using Basket.API.GrpcServices;
 using Basket.API.Mapper;
 using Basket.API.Repositories;
+using DIscount.Grpc.Protos;
 using MassTransit;
-using Microsoft.Extensions.Hosting;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddStackExchangeRedisCache(opt =>
     opt.Configuration = builder.Configuration.GetValue<string>("CacheSettings:ConnectionString")
 ) ;
+
+builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>
+    (o => o.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]));
+
+builder.Services.AddScoped<DiscountGrpcService>();
 
 builder.Services.AddScoped<IBasketRepository, ShoppingBasketRepository>();
 builder.Services.AddScoped<ISpecialMapperR, SpecialMapper>();
@@ -30,6 +37,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

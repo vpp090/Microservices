@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Basket.API.Entities;
+using Basket.API.GrpcServices;
 using Basket.API.Mapper;
 using Basket.API.Repositories;
 using BrokerMessagesR.Events;
@@ -17,15 +18,25 @@ namespace Basket.API.Controllers
         private readonly IBasketRepository _repository;
         private readonly IMapper _mapper;
         private readonly IPublishEndpoint _publishEndpoint;
-      
-        public BasketController(IBasketRepository repository, IMapper mapper, IPublishEndpoint endpoint)
+        private readonly DiscountGrpcService _discountService;
+        private readonly ILogger<BasketController> _logger;
+        private readonly IConfiguration _config;
+
+        public BasketController(IBasketRepository repository, IMapper mapper,
+                IPublishEndpoint endpoint,
+                DiscountGrpcService service,
+                ILogger<BasketController> logger,
+                IConfiguration config)
         {
             _repository = repository;
             _mapper = mapper;
             _publishEndpoint = endpoint;
+            _discountService = service;
+            _logger = logger;
+            _config = config;
         }
 
-        [HttpGet("{userName}")]
+        [HttpGet("{username}")]
         [ProducesResponseType(typeof(ShoppingBasket), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<ShoppingBasket>> GetBasket(string username)
         {
@@ -41,7 +52,15 @@ namespace Basket.API.Controllers
         [ProducesResponseType(typeof(ShoppingBasket), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<ShoppingBasket>> CreateBasket(string username, ShoppingBasket basket)
         {
+            _logger.LogInformation(_config["GrpcSettings:DiscountUrl"]);
+
             var result = await _repository.CreateBasket(username, basket);
+
+            foreach (var item in basket.Items)
+            {
+                var coupon = await _discountService.GetDiscount(item.ProductName);
+                item.Price -= coupon.Amount;
+            }
 
             if (result == null)
                 return BadRequest();
@@ -53,6 +72,13 @@ namespace Basket.API.Controllers
         [ProducesResponseType(typeof(ShoppingBasket), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<ShoppingBasket>> UpdateBasket([FromBody] ShoppingBasket basket)
         {
+
+            foreach(var item in basket.Items)
+            {
+                var coupon = await _discountService.GetDiscount(item.ProductName);
+                item.Price -= coupon.Amount;
+            }
+
             var result = await _repository.UpdateBasket(basket);
 
             if (result == null)
