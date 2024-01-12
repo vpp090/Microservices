@@ -54,6 +54,10 @@ namespace Discount.API.Extensions
                         Thread.Sleep(2000);
                         MigrateDatabase<TContext>(host, retryAvailability);
                     }
+                    else
+                    {
+                        logger.LogError(ex.ToString());
+                    }
                 }
             }
 
