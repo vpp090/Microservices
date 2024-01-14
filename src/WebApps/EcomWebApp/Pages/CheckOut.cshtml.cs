@@ -8,12 +8,10 @@ namespace EcomWebApp.Pages
     public class CheckOutModel : PageModel
     {
         private readonly IBasketService _basketService;
-        private readonly IOrderService _orderService;
-
+        
         public CheckOutModel(IBasketService basketService, IOrderService orderService)
         {
             _basketService = basketService;
-            _orderService = orderService;
         }
 
         [BindProperty]

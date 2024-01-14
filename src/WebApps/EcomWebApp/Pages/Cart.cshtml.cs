@@ -22,6 +22,10 @@ namespace EcomWebApp.Pages
             var userName = "vv";
             Cart = await _basketService.GetBasket(userName);
 
+            if(Cart is null)
+            {
+                throw new ArgumentException("No cart on this username");
+            }
             return Page();
         }
 
@@ -30,7 +34,7 @@ namespace EcomWebApp.Pages
             var userName = "vv";
             var basket = await _basketService.GetBasket(userName);
 
-            var item = basket.Items.Single(x => x.ProductId == productId);
+            var item = basket.Items.FirstOrDefault(x => x.ProductId == productId);
             basket.Items.Remove(item);
 
             var basketUpdated = await _basketService.UpdateBasket(basket);

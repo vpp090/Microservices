@@ -1,5 +1,6 @@
 ﻿using EcomWebApp.Contracts;
 using EcomWebApp.Services;
+using SpecMapperR.Extensions;
 
 namespace EcomWebApp.Extensions
 {
@@ -7,6 +8,8 @@ namespace EcomWebApp.Extensions
     {
         public static IServiceCollection ConfigureServices(this IServiceCollection services, IConfiguration config)
         {
+            services.AddSpecMapper();
+
             services.AddHttpClient<ICatalogService, CatalogService>(c =>
                 c.BaseAddress = new Uri(config["ApiSettings:GatewayAddress"]));
 

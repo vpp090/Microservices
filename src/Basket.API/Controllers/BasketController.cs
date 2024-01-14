@@ -72,7 +72,7 @@ namespace Basket.API.Controllers
         [ProducesResponseType(typeof(ShoppingBasket), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<ShoppingBasket>> UpdateBasket([FromBody] ShoppingBasket basket)
         {
-
+           
             foreach(var item in basket.Items)
             {
                 var coupon = await _discountService.GetDiscount(item.ProductName);
@@ -102,6 +102,8 @@ namespace Basket.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Checkout([FromBody] CheckoutEvent checkoutEvent, [FromServices]ISpecialMapperR specMap)
         {
+
+            
             var basket = await _repository.GetBasket(checkoutEvent.Checkout.UserName);
             if (basket == null) return NotFound("Basket_Not_Found");
 
