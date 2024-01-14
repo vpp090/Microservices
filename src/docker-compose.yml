@@ -57,10 +57,17 @@ services:
       context: .
       dockerfile: Discount.Grpc/Dockerfile
 
+  ecomwebapp:
+    image: ${DOCKER_REGISTRY-}ecomwebapp
+    build:
+      context: .
+      dockerfile: WebApps/EcomWebApp/Dockerfile
+
 volumes:
   mongo_data:
   postgres_data:
   pgadmin_data:
+
 
 
 

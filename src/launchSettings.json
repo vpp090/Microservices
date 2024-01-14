@@ -9,7 +9,8 @@
         "ocelotapigateway": "StartDebugging",
         "shopping.aggregator": "StartDebugging",
         "discount.api": "StartDebugging",
-        "discount.grpc": "StartDebugging"
+        "discount.grpc": "StartDebugging",
+        "ecomwebapp": "StartDebugging"
       }
     }
   }

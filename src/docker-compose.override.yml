@@ -123,3 +123,18 @@ services:
     ports:
       - "8103:80"
 
+
+  ecomwebapp:
+    container_name: ecommwebapp
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ApiSettings:GatewayAddress=http://ocelotapi.gateway"
+    depends_on:
+       - ocelotapigateway
+       - order.api
+       - basket.api
+       - catalog.api
+       - discount.grpc
+    ports:
+      - "8006:80"
+
